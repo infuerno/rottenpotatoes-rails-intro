@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+  attr_reader :order
 
   def movie_params
     params.require(:movie).permit(:title, :rating, :description, :release_date)
@@ -12,6 +13,13 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    if params[:order] == "title"
+      @movies.order! :title
+      @order = :title
+    elsif params[:order] == "release_date"
+      @movies.order! :release_date        
+      @order = :release_date
+    end
   end
 
   def new
