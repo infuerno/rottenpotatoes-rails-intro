@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  attr_reader :order
+  attr_reader :order, :selected_ratings
 
   def movie_params
     params.require(:movie).permit(:title, :rating, :description, :release_date)
@@ -12,7 +12,16 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    if params['ratings']
+      @movies = Movie.where({:rating => params['ratings'].keys })
+      @selected_ratings = params['ratings']
+    else
+      @movies = Movie.all
+      @selected_ratings = Movie.all_ratings
+    end
+
+    # only title and release_date are valid for sorting
+    # need to do explicity or ensure we restrict it
     if params[:order] == "title"
       @movies.order! :title
       @order = :title
