@@ -11,10 +11,10 @@
 %table#movies
   %thead
     %tr
-      %th{:class => @order == :title ? 'hilite' : '' }
+      %th{:class => @order == 'title' ? 'hilite' : '' }
         %a#title_header{:href => movies_path(:order => :title)} Movie Title
       %th Rating
-      %th{:class => @order == :release_date ? 'hilite' : '' }
+      %th{:class => @order == 'release_date' ? 'hilite' : '' }
         %a#release_date_header{:href => movies_path(:order => :release_date)} Release Date
       %th More Info
   %tbody
